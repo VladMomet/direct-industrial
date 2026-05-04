@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direct Industrial — Импорт промышленного оборудования из Китая под ключ</title>
+<meta name="description" content="Прямой контракт с фабриками. 100% белый ВЭД, ГОСТ-сертификация, страхование груза, live-трекер. Медоборудование, станки ЧПУ, HoReCa, складская и спецтехника. ТКП за 24 часа.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIRECT INDUSTRIAL — DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg:        #0A0A0A;
+  --surface:   #111113;
+  --surface-2: #18181B;
+  --surface-3: #1F1F23;
+  --border:    #27272A;
+  --border-2:  #3F3F46;
+  --muted:     #71717A;
+  --muted-2:   #A1A1AA;
+  --text:      #FAFAFA;
+  --text-2:    #E4E4E7;
+
+  --accent:        #2563EB;
+  --accent-hover:  #1D4ED8;
+  --accent-soft:   rgba(37, 99, 235, 0.12);
+  --accent-glow:   rgba(37, 99, 235, 0.35);
+
+  --success:    #10B981;
+  --warning:    #F59E0B;
+
+  --r-sm: 6px;
+  --r:    8px;
+  --r-lg: 12px;
+
+  --container: 1280px;
+  --header-h: 64px;
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+.mono, .num { font-family: 'IBM Plex Mono', monospace; font-feature-settings: "tnum" 1; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+svg { display: block; }
+input, textarea, select { font-family: inherit; }
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+@media (max-width: 768px) { .container { padding: 0 20px; } }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted-2);
+}
+.eyebrow .marker {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--text);
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  margin-top: 16px;
+  max-width: 640px;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border-radius: var(--r);
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
+  user-select: none;
+  padding: 0 16px;
+  height: 40px;
+  font-family: inherit;
+}
+.btn-md { height: 44px; padding: 0 20px; font-size: 14px; }
+.btn-lg { height: 52px; padding: 0 24px; font-size: 15px; }
+.btn-xl { height: 60px; padding: 0 28px; font-size: 16px; }
+
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-light { background: white; color: var(--bg); }
+.btn-light:hover { background: var(--text-2); }
+
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border-2); }
+.btn-ghost:hover { background: var(--surface-2); border-color: var(--muted); }
+
+.btn-tg { background: #229ED9; color: white; }
+.btn-tg:hover { background: #1A8AC4; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.app-header-inner {
+  height: var(--header-h);
+  display: flex; align-items: center; gap: 32px;
+}
+.app-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.app-logo-mark {
+  position: relative;
+  width: 28px; height: 28px;
+  background: var(--accent);
+  border-radius: 6px;
+  display: grid; place-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.app-logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  border-radius: 9px;
+  pointer-events: none;
+}
+.app-logo .logo-text { display: flex; flex-direction: column; line-height: 1; gap: 2px; }
+.app-logo .logo-text .name { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+.app-logo .logo-text .sub { font-size: 10px; font-weight: 500; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.app-nav {
+  display: flex; align-items: center; gap: 4px;
+  flex: 1;
+}
+.app-nav a {
+  padding: 8px 14px;
+  font-size: 14px;
+  color: var(--muted-2);
+  border-radius: var(--r-sm);
+  transition: color 150ms;
+}
+.app-nav a:hover { color: var(--text); background: var(--surface-2); }
+
+.app-header-cta {
+  display: flex; align-items: center; gap: 12px;
+}
+.header-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.header-status .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@media (max-width: 900px) {
+  .app-nav { display: none; }
+  .header-status { display: none; }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  padding: 88px 0 96px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%);
+  opacity: 0.4;
+}
+.hero-glow {
+  position: absolute;
+  width: 800px; height: 800px;
+  top: -300px; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+  opacity: 0.5;
+}
+.hero-inner { position: relative; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 32px;
+}
+.hero-eyebrow .pill-marker {
+  display: inline-flex;
+  width: 18px; height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  align-items: center; justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+.hero-eyebrow .sep { color: var(--border-2); }
+
+.hero h1 {
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  margin: 0 0 32px;
+  max-width: 1100px;
+}
+.hero h1 .accent {
+  display: inline-block;
+  position: relative;
+  color: var(--accent);
+}
+.hero h1 .strike {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--accent);
+  color: var(--muted);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--muted-2);
+  line-height: 1.55;
+  margin: 0 0 40px;
+  max-width: 680px;
+}
+.hero-sub b { color: var(--text); font-weight: 500; }
+
+.hero-cta-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.hero-stat {
+  padding: 24px 28px;
+  background: var(--bg);
+}
+.hero-stat-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.hero-stat-value .unit {
+  font-size: 16px;
+  color: var(--muted-2);
+  font-weight: 500;
+  margin-left: 4px;
+}
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 56px 0 64px; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================================
+   TICKER (live shipments)
+   ============================================================ */
+.ticker {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+  position: relative;
+}
+.ticker::before, .ticker::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker::before { left: 0; background: linear-gradient(90deg, var(--surface), transparent); }
+.ticker::after  { right: 0; background: linear-gradient(270deg, var(--surface), transparent); }
+.ticker-inner {
+  display: flex;
+  gap: 48px;
+  padding: 14px 0;
+  animation: ticker-scroll 90s linear infinite;
+  width: max-content;
+}
+.ticker:hover .ticker-inner { animation-play-state: paused; }
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 13px;
+  white-space: nowrap;
+  color: var(--muted-2);
+}
+.ticker-item .pill {
+  display: inline-flex;
+  padding: 3px 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--surface-3);
+  color: var(--text);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.ticker-item .pill.success { color: var(--success); background: rgba(16, 185, 129, 0.1); }
+.ticker-item b { color: var(--text); font-weight: 500; }
+.ticker-item .dot { color: var(--border-2); }
+
+/* ============================================================
+   LOGISTICS MAP / SCHEMA
+   ============================================================ */
+.logistics {
+  padding: 120px 0;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.logistics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .logistics { padding: 80px 0; }
+  .logistics-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+.logistics-text h2 { margin-bottom: 0; }
+.logistics-points {
+  margin-top: 32px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.logistics-point {
+  display: flex; gap: 16px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+.logistics-point .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--muted-2);
+  flex-shrink: 0;
+  width: 32px;
+}
+.logistics-point .body { flex: 1; }
+.logistics-point .body h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.logistics-point .body p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-2);
+  line-height: 1.5;
+}
+
+.logistics-map {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.logistics-map svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================================
+   INDUSTRIES
+   ============================================================ */
+.industries {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 900px) { .industries { padding: 80px 0; } }
+.industries-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: end;
+  margin-bottom: 64px;
+}
+@media (max-width: 900px) {
+  .industries-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+}
+
+.industries-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+@media (max-width: 768px) { .industries-grid { grid-template-columns: 1fr; } }
+
+.industry {
+  padding: 32px 32px 28px;
+  background: var(--bg);
+  display: flex; flex-direction: column; gap: 20px;
+  position: relative;
+  transition: background 200ms ease;
+  cursor: pointer;
+}
+.industry:hover { background: var(--surface); }
+.industry-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.industry h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.industry-icon {
+  width: 56px; height: 56px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  display: grid; place-items: center;
+  color: var(--text);
+}
+.industry-icon svg { width: 28px; height: 28px; }
+.industry-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.industry-list li {
+  font-size: 13.5px;
+  color: var(--muted-2);
+  display: flex; gap: 8px;
+}
+.industry-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 1.5px;
+  background: var(--muted);
+  margin-top: 9px;
+  flex-shrink: 0;
+}
+.industry-meta {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+}
+.industry-meta .meta-block {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.industry-meta .label {
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.industry-meta .value { color: var(--text); font-weight: 500; }
+.industry-meta .arrow {
+  margin-left: auto;
+  color: var(--muted-2);
+  transition: transform 150ms, color 150ms;
+}
+.industry:hover .industry-meta .arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* "Custom cargo" — special wide block */
+.custom-cargo {
+  margin-top: 24px;
+  padding: 48px 48px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(ellipse 60% 100% at 90% 50%, var(--accent-soft) 0%, transparent 70%),
+    var(--surface);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .custom-cargo { grid-template-columns: 1fr; padding: 32px; gap: 28px; }
+}
+.custom-cargo h3 {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+.custom-cargo h3 .accent { color: var(--accent); }
+.custom-cargo p {
+  font-size: 15px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  margin: 0 0 24px;
+  max-width: 520px;
+}
+.custom-cargo p b { color: var(--text); font-weight: 500; }
+.custom-cargo .examples {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 24px;
+}
+.custom-cargo .ex-pill {
+  padding: 6px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text-2);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.custom-cargo .legal-note {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.custom-cargo-illu {
+  position: relative;
+  aspect-ratio: 1;
+  max-width: 320px;
+  margin-left: auto;
+}
+.custom-cargo-illu svg { width: 100%; height: 100%; }
+
+/* ============================================================
+   PROCESS (6 steps)
+   ============================================================ */
+.process {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 900px) { .process { padding: 80px 0; } }
+.process-head { margin-bottom: 56px; max-width: 720px; }
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+@media (max-width: 900px) { .process-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .process-grid { grid-template-columns: 1fr; } }
+
+.process-step {
+  padding: 28px 28px 32px;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+.process-step .step-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.process-step .step-eta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: auto;
+  position: absolute;
+  top: 28px; right: 28px;
+}
+.process-step h4 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+.process-step p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--muted-2);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   INCLUDED IN PRICE — scroll reveal
+   ============================================================ */
+.included {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+@media (max-width: 900px) { .included { padding: 80px 0; } }
+.included-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .included-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+.included-head h2 { margin-bottom: 16px; }
+.included-head p {
+  font-size: 16px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  max-width: 460px;
+  margin: 0 0 24px;
+}
+.included-total-block {
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+.included-total-block .label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.included-total-block .value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.included-total-block .value .accent { color: var(--accent); }
+
+.included-list {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.included-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 20px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 250ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1), opacity 600ms ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.included-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+.included-item:last-child { border-bottom: none; }
+.included-item:hover { background: var(--surface-2); }
+.included-item .ix-num {
+  width: 36px; height: 36px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.included-item .ix-body h4 {
+  margin: 0 0 4px;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.included-item .ix-body p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-2);
+  line-height: 1.55;
+}
+.included-item .ix-check {
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TRUST STRIP (after hero, before ticker)
+   ============================================================ */
+.trust-strip {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.trust-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+@media (max-width: 900px) {
+  .trust-strip-inner { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 500px) {
+  .trust-strip-inner { grid-template-columns: 1fr; }
+}
+.trust-cell {
+  display: flex; align-items: center; gap: 14px;
+  padding: 22px 24px;
+  border-right: 1px solid var(--border);
+}
+.trust-cell:last-child { border-right: none; }
+@media (max-width: 900px) {
+  .trust-cell:nth-child(2) { border-right: none; }
+  .trust-cell:nth-child(1), .trust-cell:nth-child(2) { border-bottom: 1px solid var(--border); }
+}
+.trust-icon {
+  width: 36px; height: 36px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.trust-cell .body { display: flex; flex-direction: column; gap: 2px; }
+.trust-cell .label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+.trust-cell .sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   TRANSPARENCY / TRACKER section
+   ============================================================ */
+.transparency {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .transparency { padding: 80px 0; } }
+.transparency::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 80% 30%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0.5;
+}
+.transparency-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 64px;
+  align-items: start;
+  position: relative;
+}
+@media (max-width: 900px) {
+  .transparency-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+.transparency-text h2 { margin-bottom: 16px; }
+.transparency-text p {
+  font-size: 16px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  margin: 0 0 32px;
+  max-width: 460px;
+}
+.transparency-text p b { color: var(--text); font-weight: 500; }
+
+.tcontrol-list {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface);
+}
+.tcontrol-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 14px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.tcontrol-row:last-child { border-bottom: none; }
+.tcontrol-num {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border-2);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+  background: var(--bg);
+}
+.tcontrol-row .body h5 {
+  margin: 0 0 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.tcontrol-row .body p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted-2);
+  line-height: 1.5;
+}
+
+/* Tracker mockup card */
+.tracker {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+.tracker-beta-badge {
+  position: absolute;
+  top: -10px; right: 18px;
+  z-index: 5;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px 4px 8px;
+  background: var(--accent);
+  color: white;
+  border-radius: 999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+.tracker-beta-badge::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: white;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+.tracker-beta-note {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  display: flex; gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: var(--muted-2);
+  line-height: 1.5;
+}
+.tracker-beta-note .ic {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tracker-beta-note b { color: var(--text); font-weight: 500; }
+.tracker-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.tracker-header .traffic { display: flex; gap: 6px; }
+.tracker-header .traffic .light { width: 10px; height: 10px; border-radius: 50%; background: var(--surface-3); }
+.tracker-header .traffic .light:nth-child(1) { background: #EF4444; opacity: 0.6; }
+.tracker-header .traffic .light:nth-child(2) { background: var(--warning); opacity: 0.6; }
+.tracker-header .traffic .light:nth-child(3) { background: var(--success); opacity: 0.6; }
+.tracker-url {
+  flex: 1;
+  padding: 6px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--muted-2);
+  display: flex; align-items: center; gap: 8px;
+}
+.tracker-url svg { color: var(--success); flex-shrink: 0; }
+.tracker-url b { color: var(--text); font-weight: 500; }
+
+.tracker-body { padding: 24px; }
+
+.tracker-meta-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.tracker-meta-row .order-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.tracker-meta-row h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.tracker-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--success);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.tracker-status .pulse {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.tracker-checkpoints {
+  display: flex; flex-direction: column;
+  position: relative;
+  margin-bottom: 24px;
+}
+.tracker-checkpoints::before {
+  content: '';
+  position: absolute;
+  left: 9px; top: 14px; bottom: 14px;
+  width: 2px;
+  background: var(--border);
+}
+.tcheck {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 14px;
+  padding: 10px 0;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.tcheck-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.tcheck.is-done .tcheck-dot {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+.tcheck.is-current .tcheck-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.tcheck.is-current .tcheck-dot::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  animation: trackerPulse 2s ease-out infinite;
+  opacity: 0;
+}
+@keyframes trackerPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+.tcheck-dot svg { width: 10px; height: 10px; }
+.tcheck-body .label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+.tcheck-body .sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--muted-2);
+}
+.tcheck.is-pending .tcheck-body .label { color: var(--muted); }
+.tcheck-time {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  white-space: nowrap;
+}
+.tcheck.is-current .tcheck-time {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tracker-photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tracker-photo {
+  aspect-ratio: 1;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: grid; place-items: center;
+  color: var(--muted);
+  position: relative;
+  overflow: hidden;
+}
+.tracker-photo svg { width: 18px; height: 18px; opacity: 0.5; }
+.tracker-photo .photo-meta {
+  position: absolute;
+  bottom: 4px; left: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: var(--muted-2);
+  letter-spacing: 0.05em;
+}
+.tracker-photo.is-new::after {
+  content: '';
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tracker-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+}
+.tracker-footer .gps {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--text-2);
+}
+.tracker-footer .gps .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   DOCUMENTS GRID
+   ============================================================ */
+.documents {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 900px) { .documents { padding: 80px 0; } }
+.documents-head {
+  max-width: 720px;
+  margin-bottom: 56px;
+}
+.documents-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 900px) { .documents-list { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .documents-list { grid-template-columns: 1fr; } }
+
+.doc-card {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: border-color 150ms;
+}
+.doc-card:hover { border-color: var(--border-2); }
+.doc-card .doc-icon {
+  width: 36px; height: 36px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  color: var(--text-2);
+}
+.doc-card .doc-code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.doc-card h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.doc-card p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted-2);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   CASES
+   ============================================================ */
+.cases {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 900px) { .cases { padding: 80px 0; } }
+.cases-head {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: end;
+  margin-bottom: 56px;
+}
+@media (max-width: 900px) {
+  .cases-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+}
+.cases-disclaimer {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px;
+}
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) { .cases-grid { grid-template-columns: 1fr; } }
+
+.case {
+  padding: 28px 28px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  display: flex; flex-direction: column; gap: 20px;
+}
+.case-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px;
+}
+.case-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  background: var(--surface-3);
+  color: var(--text-2);
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+.case-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+.case h4 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+.case-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted-2);
+  line-height: 1.55;
+}
+.case-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.case-stat .label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.case-stat .value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.case-stat .value.accent { color: var(--accent); }
+
+/* ============================================================
+   BIG NUMBERS strip
+   ============================================================ */
+.bignumbers {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+@media (max-width: 900px) { .bignumbers { padding: 64px 0; } }
+.bignumbers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+@media (max-width: 900px) { .bignumbers-grid { grid-template-columns: repeat(2, 1fr); } }
+.bignum {
+  padding: 36px 28px 32px;
+  background: var(--bg);
+}
+.bignum-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.bignum-value .unit {
+  font-size: 0.45em;
+  color: var(--muted-2);
+  font-weight: 500;
+  margin-left: 6px;
+  letter-spacing: -0.01em;
+}
+.bignum-value.accent { color: var(--accent); }
+.bignum-label {
+  font-size: 13px;
+  color: var(--muted-2);
+  line-height: 1.5;
+  max-width: 220px;
+}
+
+/* ============================================================
+   FORM
+   ============================================================ */
+.form-section {
+  padding: 120px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+@media (max-width: 900px) { .form-section { padding: 80px 0; } }
+.form-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, var(--accent-soft) 0%, transparent 60%);
+  pointer-events: none;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 64px;
+  align-items: start;
+  position: relative;
+}
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+.form-text h2 { margin-bottom: 16px; }
+.form-text p {
+  font-size: 16px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  margin: 0 0 32px;
+  max-width: 460px;
+}
+.form-promises {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.form-promise {
+  display: flex; gap: 12px;
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.form-promise .ix {
+  width: 22px; height: 22px;
+  background: rgba(16, 185, 129, 0.12);
+  border-radius: 6px;
+  display: grid; place-items: center;
+  color: var(--success);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.form-card {
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+.form-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.form-row.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .form-row.row-2 { grid-template-columns: 1fr; } }
+.form-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  display: flex; align-items: center; gap: 6px;
+}
+.form-label .req { color: var(--accent); }
+.form-label .opt { color: var(--muted); font-weight: 400; font-size: 11px; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0 14px;
+  height: 44px;
+  background: var(--bg);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.form-textarea {
+  height: 96px;
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+.form-input:hover, .form-select:hover, .form-textarea:hover { border-color: var(--muted); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.form-select {
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.form-helper { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+.form-checkbox {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 12.5px;
+  color: var(--muted-2);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.form-checkbox input {
+  appearance: none; -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--border-2);
+  border-radius: 4px;
+  background: var(--bg);
+  margin: 0;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+  cursor: pointer;
+}
+.form-checkbox input:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.form-checkbox input:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px; left: 4px;
+  width: 5px; height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.form-checkbox a { color: var(--text); text-decoration: underline; text-decoration-color: var(--border-2); text-underline-offset: 3px; }
+.form-checkbox a:hover { text-decoration-color: var(--text); }
+
+.form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 24px;
+}
+@media (max-width: 500px) { .form-actions { grid-template-columns: 1fr; } }
+.form-actions .btn { width: 100%; height: 52px; font-size: 15px; }
+
+.form-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.form-divider::before, .form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 24px 0;
+}
+.form-success.is-shown { display: block; }
+.form-success .ic {
+  width: 56px; height: 56px;
+  background: rgba(16, 185, 129, 0.12);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--success);
+  margin: 0 auto 20px;
+}
+.form-success h4 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.form-success p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted-2);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.app-footer {
+  padding: 64px 0 32px;
+  background: var(--bg);
+}
+.app-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+@media (max-width: 768px) { .app-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.app-footer-brand p {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: var(--muted-2);
+  line-height: 1.6;
+  max-width: 320px;
+}
+.app-footer-col h5 {
+  margin: 0 0 14px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-2);
+}
+.app-footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.app-footer-col ul a {
+  font-size: 13.5px;
+  color: var(--text-2);
+  transition: color 150ms;
+}
+.app-footer-col ul a:hover { color: var(--accent); }
+.app-footer-col .contact-row {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+}
+.app-footer-bottom {
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+  flex-wrap: wrap; gap: 16px;
+}
+.app-footer-bottom .legal {
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   STICKY CTA (right bottom)
+   ============================================================ */
+.sticky-cta {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  display: none;
+  background: var(--bg);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-lg);
+  padding: 14px 14px 14px 18px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  align-items: center;
+  gap: 14px;
+  max-width: 360px;
+  animation: stickyIn 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes stickyIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sticky-cta.is-shown { display: flex; }
+.sticky-cta .text {
+  font-size: 12px;
+  color: var(--muted-2);
+  line-height: 1.4;
+}
+.sticky-cta .text b { color: var(--text); font-weight: 500; }
+.sticky-cta .btn { flex-shrink: 0; height: 36px; padding: 0 14px; font-size: 13px; }
+.sticky-cta-close {
+  width: 22px; height: 22px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  display: grid; place-items: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.sticky-cta-close:hover { color: var(--text); background: var(--surface-2); }
+
+@media (max-width: 600px) {
+  .sticky-cta { left: 16px; right: 16px; max-width: none; bottom: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="app-header">
+  <div class="container">
+    <div class="app-header-inner">
+      <a href="#" class="app-logo">
+        <span class="app-logo-mark">D</span>
+        <span class="logo-text">
+          <span class="name">Direct Industrial</span>
+          <span class="sub">CN → RU · под ключ</span>
+        </span>
+      </a>
+      <nav class="app-nav">
+        <a href="#industries">Что возим</a>
+        <a href="#transparency">Прозрачность</a>
+        <a href="#process">Как работаем</a>
+        <a href="#included">Что в цене</a>
+        <a href="#cases">Кейсы</a>
+      </nav>
+      <div class="app-header-cta">
+        <span class="header-status">
+          <span class="dot"></span>
+          Заявок в работе: <span class="num" style="color: var(--text); font-weight: 500; margin-left: 4px;">12</span>
+        </span>
+        <a href="#form" class="btn btn-primary btn-md">Запросить расчёт</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="container hero-inner">
+
+    <div class="hero-eyebrow">
+      <span class="pill-marker">CN</span>
+      <span>Импорт промышленного оборудования</span>
+      <span class="sep">·</span>
+      <span>5 лет на рынке</span>
+    </div>
+
+    <h1>
+      Привезём станок,<br>
+      кофемашину или трактор<br>
+      <span class="strike">«по запросу менеджера»</span> <span class="accent">под ключ за минимально возможный срок.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Прямой контракт с китайскими фабриками. <b>100% белые ВЭД-документы и сертификаты, страхование груза, фото-видео-контроль на каждом этапе и live-трекер партии в реальном времени.</b> Без серых схем, без посредников - всё в одной DDP-цене.
+    </p>
+
+    <div class="hero-cta-row">
+      <a href="#form" class="btn btn-primary btn-xl">
+        Запросить расчёт
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="https://t.me/DirectIndustrial" target="_blank" class="btn btn-tg btn-xl">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Написать в Telegram
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value">5<span class="unit">+ лет</span></div>
+        <div class="hero-stat-label">на рынке ВЭД из Китая</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">5 000<span class="unit">SKU / год</span></div>
+        <div class="hero-stat-label">привозим под клиентов</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">547<span class="unit">проектов</span></div>
+        <div class="hero-stat-label">под ключ за 2025</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value">3<span class="unit">часа</span></div>
+        <div class="hero-stat-label">первый ответ менеджера</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST STRIP
+     ============================================================ -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-strip-inner">
+      <div class="trust-cell">
+        <span class="trust-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+        </span>
+        <div class="body">
+          <span class="label">100% белый ВЭД</span>
+          <span class="sub">ДТ · контракт · ТР ТС · РУ</span>
+        </div>
+      </div>
+      <div class="trust-cell">
+        <span class="trust-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+        </span>
+        <div class="body">
+          <span class="label">Фото и видео-контроль</span>
+          <span class="sub">3 этапа: сырьё · mid · pre-ship</span>
+        </div>
+      </div>
+      <div class="trust-cell">
+        <span class="trust-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/></svg>
+        </span>
+        <div class="body">
+          <span class="label">Live-трекер партии</span>
+          <span class="sub">GPS + статусы в реальном времени</span>
+        </div>
+      </div>
+      <div class="trust-cell">
+        <span class="trust-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <div class="body">
+          <span class="label">Страхование груза</span>
+          <span class="sub">100% стоимости в пути</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TICKER
+     ============================================================ -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <!-- Items duplicated by JS for seamless loop -->
+  </div>
+</div>
+
+<!-- ============================================================
+     LOGISTICS MAP
+     ============================================================ -->
+<section class="logistics" id="logistics">
+  <div class="container">
+    <div class="logistics-grid">
+      <div class="logistics-text">
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Маршрут под ключ</div>
+        <h2 class="section-title">Иу — Маньчжурия — Москва.<br>Без перегрузов и серых ставок.</h2>
+        <p class="section-sub">
+          Собственное логистическое плечо. Контейнер идёт от фабрики до растаможки в РФ под одним номером, с одним договором, с одним ответственным. Цена и сроки фиксируются в момент подписания.
+        </p>
+
+        <div class="logistics-points">
+          <div class="logistics-point">
+            <span class="num">01</span>
+            <div class="body">
+              <h4>Иу / Гуанчжоу / Шэньчжэнь</h4>
+              <p>Приёмка с фабрики на наш склад. Фото- и видео-фиксация партии до отгрузки.</p>
+            </div>
+          </div>
+          <div class="logistics-point">
+            <span class="num">02</span>
+            <div class="body">
+              <h4>Маньчжурия</h4>
+              <p>Прохождение границы РФ. Полный пакет ВЭД-документов оформляется на стороне РФ.</p>
+            </div>
+          </div>
+          <div class="logistics-point">
+            <span class="num">03</span>
+            <div class="body">
+              <h4>Москва → ваш адрес</h4>
+              <p>Растаможка, доставка до площадки клиента под подпись акта приёмки.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logistics-map">
+        <svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
+          <!-- Map grid -->
+          <defs>
+            <pattern id="mapgrid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#27272A" stroke-width="0.5"/>
+            </pattern>
+            <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#2563EB" stop-opacity="0.2"/>
+              <stop offset="50%" stop-color="#2563EB" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#2563EB" stop-opacity="0.2"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="600" height="420" fill="url(#mapgrid)"/>
+
+          <!-- Schematic country borders / continents (highly stylized) -->
+          <!-- Russia/Asia outline -->
+          <path d="M 30 90 Q 80 70 140 80 Q 200 90 260 110 Q 320 130 380 140 Q 440 145 500 130 Q 560 115 580 100" 
+                fill="none" stroke="#3F3F46" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.5"/>
+          <path d="M 50 250 Q 130 270 220 280 Q 310 290 400 280 Q 490 270 550 290" 
+                fill="none" stroke="#3F3F46" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.5"/>
+
+          <!-- Country labels -->
+          <text x="120" y="50" font-family="IBM Plex Mono" font-size="10" fill="#71717A" letter-spacing="2">RU · MOSCOW</text>
+          <text x="430" y="50" font-family="IBM Plex Mono" font-size="10" fill="#71717A" letter-spacing="2">CN · YIWU</text>
+          <text x="280" y="50" font-family="IBM Plex Mono" font-size="10" fill="#71717A" letter-spacing="2">MANZHOULI</text>
+
+          <!-- Distance markers / lat lines -->
+          <line x1="0" y1="180" x2="600" y2="180" stroke="#27272A" stroke-width="0.5" stroke-dasharray="2 4"/>
+          <line x1="0" y1="320" x2="600" y2="320" stroke="#27272A" stroke-width="0.5" stroke-dasharray="2 4"/>
+
+          <!-- Route line -->
+          <path id="routePath" d="M 540 180 Q 460 200 380 200 Q 300 200 220 200 Q 130 200 80 200" 
+                fill="none" stroke="url(#routeGrad)" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- Animated dashes on route -->
+          <path d="M 540 180 Q 460 200 380 200 Q 300 200 220 200 Q 130 200 80 200" 
+                fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="6 12">
+            <animate attributeName="stroke-dashoffset" from="0" to="-180" dur="6s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- Stops -->
+          <!-- Yiwu -->
+          <g>
+            <circle cx="540" cy="180" r="20" fill="#2563EB" opacity="0.15"/>
+            <circle cx="540" cy="180" r="11" fill="#2563EB" opacity="0.25"/>
+            <circle cx="540" cy="180" r="5" fill="#2563EB"/>
+            <text x="540" y="218" font-family="Inter" font-size="11" fill="#FAFAFA" font-weight="600" text-anchor="middle">Иу · Гуанчжоу</text>
+            <text x="540" y="232" font-family="IBM Plex Mono" font-size="9" fill="#71717A" text-anchor="middle">SUPPLIERS · WAREHOUSE</text>
+          </g>
+
+          <!-- Manzhouli -->
+          <g>
+            <circle cx="300" cy="200" r="14" fill="#2563EB" opacity="0.15"/>
+            <circle cx="300" cy="200" r="6" fill="#FAFAFA"/>
+            <circle cx="300" cy="200" r="3" fill="#2563EB"/>
+            <text x="300" y="232" font-family="Inter" font-size="11" fill="#FAFAFA" font-weight="600" text-anchor="middle">Маньчжурия</text>
+            <text x="300" y="246" font-family="IBM Plex Mono" font-size="9" fill="#71717A" text-anchor="middle">RU/CN BORDER</text>
+          </g>
+
+          <!-- Moscow -->
+          <g>
+            <circle cx="80" cy="200" r="20" fill="#2563EB" opacity="0.15"/>
+            <circle cx="80" cy="200" r="11" fill="#2563EB" opacity="0.25"/>
+            <circle cx="80" cy="200" r="5" fill="#2563EB"/>
+            <text x="80" y="232" font-family="Inter" font-size="11" fill="#FAFAFA" font-weight="600" text-anchor="middle">Москва</text>
+            <text x="80" y="246" font-family="IBM Plex Mono" font-size="9" fill="#71717A" text-anchor="middle">CUSTOMS · DELIVERY</text>
+          </g>
+
+          <!-- Animated container (moving along the route) -->
+          <g>
+            <rect x="-12" y="-8" width="24" height="16" rx="1.5" fill="#FAFAFA" stroke="#2563EB" stroke-width="1.5">
+              <animateMotion dur="6s" repeatCount="indefinite" rotate="0">
+                <mpath href="#routePath"/>
+              </animateMotion>
+            </rect>
+            <line x1="-8" y1="-8" x2="-8" y2="8" stroke="#2563EB" stroke-width="0.6">
+              <animateMotion dur="6s" repeatCount="indefinite">
+                <mpath href="#routePath"/>
+              </animateMotion>
+            </line>
+            <line x1="-4" y1="-8" x2="-4" y2="8" stroke="#2563EB" stroke-width="0.6">
+              <animateMotion dur="6s" repeatCount="indefinite">
+                <mpath href="#routePath"/>
+              </animateMotion>
+            </line>
+            <line x1="0" y1="-8" x2="0" y2="8" stroke="#2563EB" stroke-width="0.6">
+              <animateMotion dur="6s" repeatCount="indefinite">
+                <mpath href="#routePath"/>
+              </animateMotion>
+            </line>
+            <line x1="4" y1="-8" x2="4" y2="8" stroke="#2563EB" stroke-width="0.6">
+              <animateMotion dur="6s" repeatCount="indefinite">
+                <mpath href="#routePath"/>
+              </animateMotion>
+            </line>
+            <line x1="8" y1="-8" x2="8" y2="8" stroke="#2563EB" stroke-width="0.6">
+              <animateMotion dur="6s" repeatCount="indefinite">
+                <mpath href="#routePath"/>
+              </animateMotion>
+            </line>
+          </g>
+
+          <!-- Distance / time annotations -->
+          <text x="420" y="170" font-family="IBM Plex Mono" font-size="9" fill="#71717A" text-anchor="middle">~4 200 КМ</text>
+          <text x="180" y="170" font-family="IBM Plex Mono" font-size="9" fill="#71717A" text-anchor="middle">~6 200 КМ</text>
+
+          <!-- Bottom info -->
+          <text x="300" y="380" font-family="Inter" font-size="11" fill="#A1A1AA" text-anchor="middle" letter-spacing="0.5">
+            ОДИН ДОГОВОР · ОДИН ОТВЕТСТВЕННЫЙ · 35–55 ДНЕЙ
+          </text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRANSPARENCY / TRACKER
+     ============================================================ -->
+<section class="transparency" id="transparency">
+  <div class="container">
+    <div class="transparency-grid">
+      <div class="transparency-text">
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Прозрачность и контроль</div>
+        <h2 class="section-title">Видите свой груз в каждой точке маршрута</h2>
+        <p>
+          У каждой партии — <b>персональный трекер</b> с GPS-локацией контейнера, статусом этапа и фото-видео-отчётами с фабрики, склада и таможни. Доступ через браузер или Telegram-уведомления при смене статуса.
+        </p>
+
+        <div class="tcontrol-list">
+          <div class="tcontrol-row">
+            <span class="tcontrol-num">01</span>
+            <div class="body">
+              <h5>Контроль качества на фабрике — 3 этапа</h5>
+              <p>Проверка сырья перед запуском, mid-production audit, pre-shipment inspection. Фото и видео в трекер. Право отказаться от партии до отгрузки.</p>
+            </div>
+          </div>
+          <div class="tcontrol-row">
+            <span class="tcontrol-num">02</span>
+            <div class="body">
+              <h5>Фото- и видео-фиксация на складе в Иу</h5>
+              <p>Каждое место партии перед загрузкой в контейнер. Сверка серийных номеров и комплектации. Видео-обзор при пломбировании.</p>
+            </div>
+          </div>
+          <div class="tcontrol-row">
+            <span class="tcontrol-num">03</span>
+            <div class="body">
+              <h5>GPS-трекер контейнера в реальном времени</h5>
+              <p>Локация обновляется каждые 6 часов. Push в Telegram и email при пересечении границы, прибытии в Москву и старте растаможки.</p>
+            </div>
+          </div>
+          <div class="tcontrol-row">
+            <span class="tcontrol-num">04</span>
+            <div class="body">
+              <h5>Страхование на 100% стоимости груза</h5>
+              <p>Cargo Insurance в российском страховщике с лицензией. Покрывает повреждение, утрату, кражу. Компенсация — в течение 14 дней с момента заявки.</p>
+            </div>
+          </div>
+          <div class="tcontrol-row">
+            <span class="tcontrol-num">05</span>
+            <div class="body">
+              <h5>100% белые ВЭД-документы и сертификаты</h5>
+              <p>Прямой контракт на ваше юрлицо, паспорт сделки в банке, ДТ с реальными кодами ТН ВЭД, оригиналы РУ / ОТТС / ТР ТС. <b style="color: var(--text); font-weight: 500;">0 отказов в растаможке за 2024–2025.</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tracker mockup -->
+      <div class="tracker">
+        <span class="tracker-beta-badge">Beta</span>
+        <div class="tracker-header">
+          <div class="traffic">
+            <span class="light"></span><span class="light"></span><span class="light"></span>
+          </div>
+          <div class="tracker-url">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span><b>track.directindustrial.ru</b>/2026-014</span>
+          </div>
+        </div>
+
+        <div class="tracker-body">
+          <div class="tracker-meta-row">
+            <div>
+              <div class="order-id">Заказ DI-2026-014 · 4 единицы</div>
+              <h4>Стоматологические установки → Краснодар</h4>
+            </div>
+            <span class="tracker-status">
+              <span class="pulse"></span>
+              В пути
+            </span>
+          </div>
+
+          <div class="tracker-checkpoints">
+            <div class="tcheck is-done">
+              <span class="tcheck-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <div class="tcheck-body">
+                <div class="label">Контроль качества пройден</div>
+                <div class="sub">Фабрика, Гуанчжоу · 12 фото</div>
+              </div>
+              <div class="tcheck-time">02.05 · 09:14</div>
+            </div>
+            <div class="tcheck is-done">
+              <span class="tcheck-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <div class="tcheck-body">
+                <div class="label">Загружено на склад в Иу</div>
+                <div class="sub">Серийные номера сверены</div>
+              </div>
+              <div class="tcheck-time">04.05 · 16:42</div>
+            </div>
+            <div class="tcheck is-done">
+              <span class="tcheck-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <div class="tcheck-body">
+                <div class="label">Контейнер в пути</div>
+                <div class="sub">Иу → Маньчжурия · GPS активен</div>
+              </div>
+              <div class="tcheck-time">07.05 · 11:08</div>
+            </div>
+            <div class="tcheck is-current">
+              <span class="tcheck-dot"></span>
+              <div class="tcheck-body">
+                <div class="label">Прохождение границы</div>
+                <div class="sub">Маньчжурия · ДТ оформляется</div>
+              </div>
+              <div class="tcheck-time">сейчас</div>
+            </div>
+            <div class="tcheck is-pending">
+              <span class="tcheck-dot"></span>
+              <div class="tcheck-body">
+                <div class="label">Растаможка в Москве</div>
+                <div class="sub">ETA ≈ 14.05</div>
+              </div>
+              <div class="tcheck-time">—</div>
+            </div>
+            <div class="tcheck is-pending">
+              <span class="tcheck-dot"></span>
+              <div class="tcheck-body">
+                <div class="label">Доставка на адрес клиента</div>
+                <div class="sub">Краснодар, ул. Красных партизан, 156</div>
+              </div>
+              <div class="tcheck-time">—</div>
+            </div>
+          </div>
+
+          <div class="tracker-photos">
+            <div class="tracker-photo is-new">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span class="photo-meta">QC #08</span>
+            </div>
+            <div class="tracker-photo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span class="photo-meta">QC #07</span>
+            </div>
+            <div class="tracker-photo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span class="photo-meta">LOAD #01</span>
+            </div>
+            <div class="tracker-photo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span class="photo-meta">LOAD #02</span>
+            </div>
+          </div>
+
+          <div class="tracker-footer">
+            <span class="gps">
+              <span class="dot"></span>
+              GPS · 49.5821° N · 117.4287° E
+            </span>
+            <span>Обновлено: 2 мин назад</span>
+          </div>
+        </div>
+
+        <div class="tracker-beta-note">
+          <span class="ic">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </span>
+          <span>
+            <b>Личный кабинет в открытой бете.</b> Бета-доступ выдаём всем клиентам с действующим заказом — пишите менеджеру после подписания контракта. До запуска полного релиза статусы и фото-отчёты приходят также в Telegram и на email.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     INDUSTRIES
+     ============================================================ -->
+<section class="industries" id="industries">
+  <div class="container">
+    <div class="industries-head">
+      <div>
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Что возим</div>
+        <h2 class="section-title">5 основных направлений или любой нестандартный груз</h2>
+      </div>
+      <div>
+        <p class="section-sub">
+          Работаем с теми категориями, где <b style="color: var(--text); font-weight: 500;">нужна белая сертификация и регистрация в РФ</b> — медицина, промышленные станки, профессиональная техника. Для всего остального — раздел «Привезём что угодно».
+        </p>
+      </div>
+    </div>
+
+    <div class="industries-grid">
+      <div class="industry" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+        <div class="industry-num">01 · MEDICAL</div>
+        <div class="industry-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 19h8"/><path d="M12 4v15"/><circle cx="12" cy="4" r="2"/><path d="m6.5 8 11 0"/><path d="M19 12c0 3.5-3 7-7 7s-7-3.5-7-7"/></svg>
+        </div>
+        <h3>Медицинское оборудование</h3>
+        <ul class="industry-list">
+          <li>Стоматологические установки и кресла</li>
+          <li>УЗИ-аппараты, рентген, эндоскопы</li>
+          <li>Лазерные и физиотерапевтические системы</li>
+          <li>Расходники, инструмент, мебель</li>
+        </ul>
+        <div class="industry-meta">
+          <div class="meta-block">
+            <span class="label">Документы</span>
+            <span class="value">РУ Росздравнадзора</span>
+          </div>
+          <div class="meta-block">
+            <span class="label">Срок</span>
+            <span class="value">от 45 дней</span>
+          </div>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="industry" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+        <div class="industry-num">02 · CNC</div>
+        <div class="industry-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="1"/><path d="M7 17v4"/><path d="M17 17v4"/><path d="M3 21h18"/><circle cx="8" cy="10" r="1.5"/><circle cx="16" cy="10" r="1.5"/><path d="M9.5 10h5"/></svg>
+        </div>
+        <h3>Станки ЧПУ и промышленное оборудование</h3>
+        <ul class="industry-list">
+          <li>Токарные, фрезерные, шлифовальные станки</li>
+          <li>Лазерная и плазменная резка</li>
+          <li>Сварочное оборудование, прессы</li>
+          <li>Литьё под давлением, экструдеры</li>
+        </ul>
+        <div class="industry-meta">
+          <div class="meta-block">
+            <span class="label">Документы</span>
+            <span class="value">ТР ТС 010/2011</span>
+          </div>
+          <div class="meta-block">
+            <span class="label">Срок</span>
+            <span class="value">от 60 дней</span>
+          </div>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="industry" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+        <div class="industry-num">03 · HORECA</div>
+        <div class="industry-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+        </div>
+        <h3>HoReCa-оборудование</h3>
+        <ul class="industry-list">
+          <li>Профессиональные кофемашины и помольные системы</li>
+          <li>Печи конвекционные, пароконвектоматы</li>
+          <li>Холодильное и моечное оборудование</li>
+          <li>Барное и кухонное оснащение</li>
+        </ul>
+        <div class="industry-meta">
+          <div class="meta-block">
+            <span class="label">Документы</span>
+            <span class="value">ТР ТС 004/011/021</span>
+          </div>
+          <div class="meta-block">
+            <span class="label">Срок</span>
+            <span class="value">от 35 дней</span>
+          </div>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="industry" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+        <div class="industry-num">04 · WAREHOUSE</div>
+        <div class="industry-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0L3 6.27A2 2 0 0 0 2 8v8a2 2 0 0 0 1 1.73l8 4.62a2 2 0 0 0 2 0L18 19"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/><circle cx="18" cy="18" r="3"/></svg>
+        </div>
+        <h3>Складское оборудование</h3>
+        <ul class="industry-list">
+          <li>Стеллажи: паллетные, мезонинные, передвижные</li>
+          <li>Электроштабелёры и рохли с ВТ</li>
+          <li>Конвейерные системы и сортировщики</li>
+          <li>Подъёмные столы, тележки, упаковщики</li>
+        </ul>
+        <div class="industry-meta">
+          <div class="meta-block">
+            <span class="label">Документы</span>
+            <span class="value">ТР ТС 010 / 020</span>
+          </div>
+          <div class="meta-block">
+            <span class="label">Срок</span>
+            <span class="value">от 50 дней</span>
+          </div>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="industry" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})" style="grid-column: span 2;">
+        <div class="industry-num">05 · AGRO &amp; SPECIAL VEHICLES</div>
+        <div class="industry-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><path d="M14 17H8"/><path d="M14 17V5a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12"/><circle cx="6" cy="17" r="0.5" fill="currentColor"/></svg>
+        </div>
+        <h3>Сельхоз- и спецтехника</h3>
+        <ul class="industry-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px;">
+          <li>Мини-тракторы 25–80 л.с.</li>
+          <li>Комбайны и сеялки</li>
+          <li>Мини-погрузчики и экскаваторы</li>
+          <li>Самосвалы и манипуляторы</li>
+          <li>Дробильно-сортировочные комплексы</li>
+          <li>Дорожно-строительная техника</li>
+        </ul>
+        <div class="industry-meta">
+          <div class="meta-block">
+            <span class="label">Документы</span>
+            <span class="value">ОТТС / СБКТС / ПТС</span>
+          </div>
+          <div class="meta-block">
+            <span class="label">Регистрация</span>
+            <span class="value">Гостехнадзор / ГИБДД</span>
+          </div>
+          <div class="meta-block">
+            <span class="label">Срок</span>
+            <span class="value">от 75 дней</span>
+          </div>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOM CARGO BLOCK -->
+    <div class="custom-cargo">
+      <div>
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Индивидуальные грузы</div>
+        <h3>Привезём <span class="accent">что угодно</span> — в рамках законодательства РФ.</h3>
+        <p>
+          Если вашего оборудования нет ни в одной из 5 категорий выше — это <b>не значит, что мы не возьмёмся</b>. Привозили серверы для ЦОД, аттракционы для парков, павильоны под ключ, лабораторное оборудование, упаковочные линии, киоски самообслуживания, биогаз-установки и витражи для торговых центров. Если это легально импортировать в РФ — найдём фабрику, посчитаем DDP-цену, оформим документы.
+        </p>
+        <div class="examples">
+          <span class="ex-pill">Серверы и СХД</span>
+          <span class="ex-pill">Лабораторное</span>
+          <span class="ex-pill">Аттракционы</span>
+          <span class="ex-pill">Павильоны</span>
+          <span class="ex-pill">Упаковочные линии</span>
+          <span class="ex-pill">Витражи</span>
+          <span class="ex-pill">Биогаз-установки</span>
+          <span class="ex-pill">Киоски</span>
+          <span class="ex-pill">+ ваш запрос</span>
+        </div>
+        <a href="#form" class="btn btn-primary btn-lg">Описать задачу менеджеру</a>
+        <div class="legal-note">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Только товары, разрешённые к ввозу в РФ
+        </div>
+      </div>
+      <div class="custom-cargo-illu">
+        <svg viewBox="0 0 200 200" fill="none">
+          <!-- Stack of mixed boxes / cargo -->
+          <!-- Big base container -->
+          <rect x="20" y="120" width="160" height="60" stroke="#3F3F46" stroke-width="1.4" fill="#18181B"/>
+          <line x1="20" y1="140" x2="180" y2="140" stroke="#3F3F46" stroke-width="0.8"/>
+          <line x1="40" y1="120" x2="40" y2="180" stroke="#3F3F46" stroke-width="0.8"/>
+          <line x1="60" y1="120" x2="60" y2="180" stroke="#3F3F46" stroke-width="0.8"/>
+          <line x1="100" y1="120" x2="100" y2="180" stroke="#3F3F46" stroke-width="0.8"/>
+          <line x1="140" y1="120" x2="140" y2="180" stroke="#3F3F46" stroke-width="0.8"/>
+          <line x1="160" y1="120" x2="160" y2="180" stroke="#3F3F46" stroke-width="0.8"/>
+          <text x="100" y="160" font-family="IBM Plex Mono" font-size="8" fill="#71717A" text-anchor="middle" letter-spacing="2">DI · CARGO · 40FT</text>
+
+          <!-- Diagonal box on top -->
+          <rect x="60" y="78" width="42" height="42" stroke="#FAFAFA" stroke-width="1.4" fill="#18181B" transform="rotate(-6 81 99)"/>
+          <line x1="60" y1="86" x2="102" y2="86" stroke="#FAFAFA" stroke-width="0.8" transform="rotate(-6 81 99)"/>
+          <text x="80" y="105" font-family="IBM Plex Mono" font-size="6" fill="#A1A1AA" text-anchor="middle" transform="rotate(-6 80 105)">FRAGILE</text>
+
+          <!-- Cylindrical equipment (machine) -->
+          <ellipse cx="135" cy="92" rx="22" ry="6" stroke="#FAFAFA" stroke-width="1.4" fill="#18181B"/>
+          <rect x="113" y="92" width="44" height="28" stroke="#FAFAFA" stroke-width="1.4" fill="#18181B"/>
+          <ellipse cx="135" cy="120" rx="22" ry="6" stroke="#FAFAFA" stroke-width="1.4" fill="#18181B"/>
+          <line x1="120" y1="100" x2="150" y2="100" stroke="#3F3F46" stroke-width="0.6"/>
+          <line x1="120" y1="108" x2="150" y2="108" stroke="#3F3F46" stroke-width="0.6"/>
+
+          <!-- Question mark plus -->
+          <circle cx="40" cy="60" r="14" stroke="#2563EB" stroke-width="1.6" fill="#0A0A0A"/>
+          <text x="40" y="66" font-family="Inter" font-size="18" fill="#2563EB" font-weight="700" text-anchor="middle">?</text>
+
+          <!-- Small + plus marks -->
+          <line x1="170" y1="40" x2="170" y2="50" stroke="#2563EB" stroke-width="1.4"/>
+          <line x1="165" y1="45" x2="175" y2="45" stroke="#2563EB" stroke-width="1.4"/>
+
+          <line x1="22" y1="100" x2="22" y2="108" stroke="#3F3F46" stroke-width="1"/>
+          <line x1="18" y1="104" x2="26" y2="104" stroke="#3F3F46" stroke-width="1"/>
+
+          <!-- Floor base -->
+          <line x1="0" y1="180" x2="200" y2="180" stroke="#3F3F46" stroke-width="0.8"/>
+          <line x1="0" y1="184" x2="200" y2="184" stroke="#27272A" stroke-width="0.5" stroke-dasharray="2 4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS
+     ============================================================ -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-head">
+      <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Как работаем</div>
+      <h2 class="section-title">6 шагов от запроса до запуска оборудования у вас</h2>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <span class="step-eta">3 часа</span>
+        <div class="step-num">ШАГ 01</div>
+        <h4>Бриф и первичная оценка</h4>
+        <p>Описываете задачу: тип оборудования, объём, бюджет, сроки. Прикрепляете ТЗ или референс. Менеджер отвечает в течение 3 часов в рабочий день.</p>
+      </div>
+
+      <div class="process-step">
+        <span class="step-eta">3–7 дней</span>
+        <div class="step-num">ШАГ 02</div>
+        <h4>Подбор фабрик и ТКП</h4>
+        <p>Запрашиваем 3–5 фабрик по вашим критериям. Сверяем спеки, проверяем лицензии и историю экспорта. Присылаем ТКП с фиксированной DDP-ценой.</p>
+      </div>
+
+      <div class="process-step">
+        <span class="step-eta">1–3 дня</span>
+        <div class="step-num">ШАГ 03</div>
+        <h4>Контракт и аванс</h4>
+        <p>Прямой контракт на ваше юрлицо, без посредника. Прозрачная разбивка цены: товар, ВЭД, логистика, сертификация. Аванс 30%, остаток — после прохождения границы.</p>
+      </div>
+
+      <div class="process-step">
+        <span class="step-eta">25–60 дней</span>
+        <div class="step-num">ШАГ 04</div>
+        <h4>Производство и инспекция</h4>
+        <p>Контроль на 3 этапах: сырьё, mid-production, pre-shipment. Видео-отчёт по запросу. По готовности — фото-подтверждение перед отгрузкой с фабрики.</p>
+      </div>
+
+      <div class="process-step">
+        <span class="step-eta">10–25 дней</span>
+        <div class="step-num">ШАГ 05</div>
+        <h4>ВЭД, доставка, растаможка</h4>
+        <p>Полный пакет документов: ДТ, инвойс, контракт, сертификаты ТР ТС / РУ / ОТТС. Логистика Иу — Маньчжурия — Москва под одним номером. Растаможка от 1 дня.</p>
+      </div>
+
+      <div class="process-step">
+        <span class="step-eta">в день поставки</span>
+        <div class="step-num">ШАГ 06</div>
+        <h4>Доставка на адрес и гарантия</h4>
+        <p>Доставка до вашей площадки (не до FBO маркетплейса — до фактического адреса). 12 месяцев гарантии и сервис в РФ с оригинальными запчастями со склада в Москве.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     INCLUDED IN PRICE
+     ============================================================ -->
+<section class="included" id="included">
+  <div class="container">
+    <div class="included-grid">
+      <div class="included-head">
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Что входит в цену</div>
+        <h2 class="section-title">DDP под ключ — без скрытых платежей</h2>
+        <p>
+          Финальная цена в контракте включает <b style="color: var(--text); font-weight: 500;">всё до момента, когда оборудование стоит у вас на площадке и работает</b>. Никаких «доплат за растаможку» или «отдельно сертификация» — это уже в смете.
+        </p>
+
+        <div class="included-total-block">
+          <div class="label">Итоговая DDP-смета</div>
+          <div class="value">Товар + ВЭД + логистика + сертификация + страхование - <span class="accent">одна цена в договоре</span></div>
+        </div>
+      </div>
+
+      <div class="included-list" id="included-list">
+        <div class="included-item" data-reveal>
+          <div class="ix-num">01</div>
+          <div class="ix-body">
+            <h4>Производство и приёмка с фабрики</h4>
+            <p>Стоимость самого оборудования + 3 уровня контроля качества + фото-видео-отчёты</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="included-item" data-reveal>
+          <div class="ix-num">02</div>
+          <div class="ix-body">
+            <h4>Логистика Иу → Москва → ваш адрес</h4>
+            <p>Контейнер 20'/40' под одним номером, страхование груза, разгрузка на месте</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="included-item" data-reveal>
+          <div class="ix-num">03</div>
+          <div class="ix-body">
+            <h4>Растаможка и ВЭД-документы</h4>
+            <p>ДТ, инвойс, контракт, паспорт сделки. Уплата пошлин и НДС включена в смету</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="included-item" data-reveal>
+          <div class="ix-num">04</div>
+          <div class="ix-body">
+            <h4>Сертификация под законодательство РФ</h4>
+            <p>РУ Росздравнадзора, ОТТС, ТР ТС, СГР — что нужно по типу оборудования</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="included-item" data-reveal>
+          <div class="ix-num">05</div>
+          <div class="ix-body">
+            <h4>Русификация ПО и документации</h4>
+            <p>Перевод интерфейсов, инструкций, табличек безопасности. Локализация прошивок</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="included-item" data-reveal>
+          <div class="ix-num">06</div>
+          <div class="ix-body">
+            <h4>Страхование груза на полную стоимость</h4>
+            <p>Cargo Insurance на 100% стоимости партии в пути. При утрате или повреждении — компенсация в течение 14 дней</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+        <div class="included-item" data-reveal>
+          <div class="ix-num">07</div>
+          <div class="ix-body">
+            <h4>Гарантия 12 месяцев + сервис в РФ</h4>
+            <p>Оригинальные запчасти со склада в Москве. Удалённая диагностика, выезд инженера</p>
+          </div>
+          <span class="ix-check">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DOCUMENTS
+     ============================================================ -->
+<section class="documents" id="documents">
+  <div class="container">
+    <div class="documents-head">
+      <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Документы</div>
+      <h2 class="section-title">Полный пакет документов на ввоз и эксплуатацию</h2>
+      <p class="section-sub">Состав пакета зависит от типа оборудования и индустрии. По каждому проекту получаете оригиналы и копии в скан-архиве.</p>
+    </div>
+
+    <div class="documents-list">
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">МЕДИЦИНА</div>
+        <h5>Регистрационное удостоверение Росздравнадзора</h5>
+        <p>Обязательно для медоборудования. Оформляем под ваше юрлицо или на нас.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">ТРАНСПОРТ</div>
+        <h5>ОТТС / СБКТС / ПТС</h5>
+        <p>Одобрение типа транспортного средства, ПТС для постановки на учёт в ГИБДД / Гостехнадзоре.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">ТР ТС</div>
+        <h5>Декларация / Сертификат соответствия</h5>
+        <p>ТР ТС 004, 010, 020, 021 — машины, оборудование, низковольтка, пищеконтакт.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">ВЭД</div>
+        <h5>Декларация на товары (ДТ) и инвойс</h5>
+        <p>Полный комплект импортных документов для бухгалтерии и налоговой.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">КОНТРАКТ</div>
+        <h5>Внешнеторговый контракт</h5>
+        <p>Прямой контракт с вами как покупателем. Регистрация в банке, паспорт сделки.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">УПД</div>
+        <h5>Универсальный передаточный документ</h5>
+        <p>УПД с НДС для постановки оборудования на баланс и принятия к зачёту.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="doc-code">СТРАХОВАНИЕ</div>
+        <h5>Полис Cargo Insurance</h5>
+        <p>На 100% стоимости груза в пути. Компенсация при утрате или повреждении в течение 14 дней.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="doc-code">ГАРАНТИЯ</div>
+        <h5>Сервисный договор и гарантийный талон</h5>
+        <p>12 месяцев включено. Расширение до 24/36 месяцев — опционально.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CASES
+     ============================================================ -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="cases-head">
+      <div>
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Кейсы</div>
+        <h2 class="section-title">Что и для кого возили</h2>
+        <div class="cases-disclaimer">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Названия клиентов скрыты по NDA · цифры реальные
+        </div>
+      </div>
+      <div>
+        <p class="section-sub">Три недавних проекта в разных индустриях. Полный список — по запросу с менеджером.</p>
+      </div>
+    </div>
+
+    <div class="cases-grid">
+      <!-- TODO: заменить на реальный кейс -->
+      <div class="case">
+        <div class="case-head">
+          <span class="case-tag">MEDICAL</span>
+          <span class="case-id">CASE 2026-014</span>
+        </div>
+        <h4>Сеть стоматологических клиник, Краснодарский край</h4>
+        <p class="case-desc">Поставка 4 стоматологических установок премиум-сегмента + рентген-аппарат + расходники на 6 месяцев под ключ. Включая русификацию ПО и комплект РУ Росздравнадзора.</p>
+        <div class="case-stats">
+          <div class="case-stat">
+            <div class="label">Срок</div>
+            <div class="value">47 дней</div>
+          </div>
+          <div class="case-stat">
+            <div class="label">Чек DDP</div>
+            <div class="value accent">18.4 млн ₽</div>
+          </div>
+          <div class="case-stat">
+            <div class="label">Документы</div>
+            <div class="value">РУ + ТР ТС</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODO: заменить на реальный кейс -->
+      <div class="case">
+        <div class="case-head">
+          <span class="case-tag">CNC</span>
+          <span class="case-id">CASE 2025-088</span>
+        </div>
+        <h4>Производитель металлоизделий, Челябинская область</h4>
+        <p class="case-desc">Лазерный станок 3 кВт, фрезерный 5-осевой и сварочный полуавтомат. Прямой контракт с фабрикой в Шэньчжэне, страхование груза, доставка на площадку.</p>
+        <div class="case-stats">
+          <div class="case-stat">
+            <div class="label">Срок</div>
+            <div class="value">68 дней</div>
+          </div>
+          <div class="case-stat">
+            <div class="label">Чек DDP</div>
+            <div class="value accent">12.7 млн ₽</div>
+          </div>
+          <div class="case-stat">
+            <div class="label">Документы</div>
+            <div class="value">ТР ТС 010</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODO: заменить на реальный кейс -->
+      <div class="case">
+        <div class="case-head">
+          <span class="case-tag">HORECA</span>
+          <span class="case-id">CASE 2025-103</span>
+        </div>
+        <h4>Сеть кофеен спешелти-формата, Москва</h4>
+        <p class="case-desc">12 профессиональных кофемашин одной модели + грайндеры + холодильное оборудование под открытие 12 точек одновременно. Доставка партиями по графику открытий.</p>
+        <div class="case-stats">
+          <div class="case-stat">
+            <div class="label">Срок</div>
+            <div class="value">39 дней</div>
+          </div>
+          <div class="case-stat">
+            <div class="label">Чек DDP</div>
+            <div class="value accent">8.9 млн ₽</div>
+          </div>
+          <div class="case-stat">
+            <div class="label">Документы</div>
+            <div class="value">ТР ТС 004</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BIG NUMBERS
+     ============================================================ -->
+<section class="bignumbers">
+  <div class="container">
+    <div class="bignumbers-grid">
+      <div class="bignum">
+        <div class="bignum-value">5<span class="unit">+ лет</span></div>
+        <div class="bignum-label">собственного логистического плеча Иу — Москва</div>
+      </div>
+      <div class="bignum">
+        <div class="bignum-value">5 000<span class="unit">SKU / год</span></div>
+        <div class="bignum-label">привозим под индивидуальные запросы клиентов</div>
+      </div>
+      <div class="bignum">
+        <div class="bignum-value accent">94<span class="unit">%</span></div>
+        <div class="bignum-label">проектов сданы в срок без переноса дедлайна</div>
+      </div>
+      <div class="bignum">
+        <div class="bignum-value">0<span class="unit">отказов</span></div>
+        <div class="bignum-label">в растаможке за 2024–2025 — белый ВЭД работает</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FORM
+     ============================================================ -->
+<section class="form-section" id="form">
+  <div class="container">
+    <div class="form-grid">
+      <div class="form-text">
+        <div class="eyebrow" style="margin-bottom: 16px;"><span class="marker"></span>Запрос расчёта</div>
+        <h2 class="section-title">Опишите задачу — пришлём ТКП за 24 часа</h2>
+        <p>
+          Менеджер свяжется в течение <b style="color: var(--text); font-weight: 500;">3 часов в рабочий день</b>. Если задача нестандартная — обсудим в Telegram, голосом или с видео-показом референсов.
+        </p>
+
+        <div class="form-promises">
+          <div class="form-promise">
+            <span class="ix"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span>Не передаём ваш запрос третьим лицам — подписываем NDA по требованию</span>
+          </div>
+          <div class="form-promise">
+            <span class="ix"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span>Бесплатное ТКП по 3–5 фабрикам с фиксированной DDP-ценой</span>
+          </div>
+          <div class="form-promise">
+            <span class="ix"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span>Если возьмёмся в работу — цена в контракте не вырастет</span>
+          </div>
+          <div class="form-promise">
+            <span class="ix"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span>Если не возьмёмся — порекомендуем коллег без комиссии</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <form id="lead-form" novalidate>
+          <div class="form-row">
+            <label class="form-label" for="industry">Индустрия / тип груза <span class="req">*</span></label>
+            <select class="form-select" id="industry" name="industry" required>
+              <option value="">Выберите направление</option>
+              <option>Медицинское оборудование</option>
+              <option>Станки ЧПУ и промышленное оборудование</option>
+              <option>HoReCa-оборудование</option>
+              <option>Складское оборудование</option>
+              <option>Сельхоз- и спецтехника</option>
+              <option>Индивидуальный груз / другое</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="task">Что нужно привезти <span class="req">*</span></label>
+            <textarea class="form-textarea" id="task" name="task" placeholder="Например: 4 стоматологические установки премиум-сегмента, желательно фабрика с историей экспорта в EU, нужна русификация и РУ Росздравнадзора" required></textarea>
+            <span class="form-helper">Чем подробнее, тем быстрее ТКП. Можно прикрепить файлы в Telegram.</span>
+          </div>
+
+          <div class="form-row row-2">
+            <div>
+              <label class="form-label" for="budget">Объём / бюджет <span class="opt">опционально</span></label>
+              <input class="form-input" type="text" id="budget" name="budget" placeholder="например, 15 млн ₽">
+            </div>
+            <div>
+              <label class="form-label" for="deadline">Срок <span class="opt">опционально</span></label>
+              <input class="form-input" type="text" id="deadline" name="deadline" placeholder="например, к августу 2026">
+            </div>
+          </div>
+
+          <div class="form-row row-2">
+            <div>
+              <label class="form-label" for="name">Имя <span class="req">*</span></label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Как к вам обращаться" required>
+            </div>
+            <div>
+              <label class="form-label" for="contact">Телефон или email <span class="req">*</span></label>
+              <input class="form-input" type="text" id="contact" name="contact" placeholder="+7 ___ ___-__-__ или email" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="company">Компания <span class="opt">опционально</span></label>
+            <input class="form-input" type="text" id="company" name="company" placeholder="ООО / ИП / физлицо">
+          </div>
+
+          <!-- Honeypot: hidden from humans, bots fill it and get rejected -->
+          <div style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+            <label for="website">Website (do not fill this in)</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <label class="form-checkbox">
+            <input type="checkbox" id="consent" name="consent" required checked>
+            <span>Согласен на обработку персональных данных в соответствии с <a href="#">политикой</a> и получение ТКП на указанный контакт.</span>
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Отправить заявку
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <button type="button" class="btn btn-tg" id="tg-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              Написать в Telegram
+            </button>
+          </div>
+
+          <div class="form-divider"><span>или скиньте короткое голосовое</span></div>
+        </form>
+
+        <!-- Success state -->
+        <div class="form-success" id="form-success">
+          <div class="ic">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h4>Заявка принята</h4>
+          <p>Менеджер свяжется в течение 3 часов в рабочий день. Если срочно — пишите сразу в Telegram.</p>
+          <div style="margin-top: 20px;">
+            <a href="https://t.me/DirectIndustrial" target="_blank" class="btn btn-tg btn-md">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              Открыть @DirectIndustrial
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="app-footer">
+  <div class="container">
+    <div class="app-footer-grid">
+      <div class="app-footer-brand">
+        <a href="#" class="app-logo">
+          <span class="app-logo-mark">D</span>
+          <span class="logo-text">
+            <span class="name">Direct Industrial</span>
+            <span class="sub">CN → RU · под ключ</span>
+          </span>
+        </a>
+        <p>Импорт промышленного оборудования из Китая. Прямой контракт с фабриками, 100% белый ВЭД, страхование груза, доставка до площадки клиента под ключ.</p>
+      </div>
+      <div class="app-footer-col">
+        <h5>Разделы</h5>
+        <ul>
+          <li><a href="#industries">Что возим</a></li>
+          <li><a href="#transparency">Прозрачность и контроль</a></li>
+          <li><a href="#process">Как работаем</a></li>
+          <li><a href="#included">Что в цене</a></li>
+          <li><a href="#documents">Документы</a></li>
+          <li><a href="#cases">Кейсы</a></li>
+        </ul>
+      </div>
+      <div class="app-footer-col">
+        <h5>Связаться</h5>
+        <ul>
+          <li><a href="https://t.me/DirectIndustrial" target="_blank">Telegram @DirectIndustrial</a></li>
+          <li><a href="mailto:vladimirobo777@gmail.com">vladimirobo777@gmail.com</a></li>
+          <li><a href="#form">Форма запроса</a></li>
+        </ul>
+      </div>
+      <div class="app-footer-col">
+        <h5>Офисы</h5>
+        <ul>
+          <li><span class="contact-row">Москва · РФ</span></li>
+          <li><span class="contact-row">Иу · Гуанчжоу</span></li>
+          <li><span class="contact-row">Маньчжурия (transit)</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="app-footer-bottom">
+      <span class="legal">© 2026 Direct Industrial · Импорт оборудования из КНР · ОГРНИП 324774600177170</span>
+      <div style="display: flex; gap: 20px;">
+        <a href="#" style="color: var(--muted); transition: color 150ms;">Политика конфиденциальности</a>
+        <a href="#" style="color: var(--muted); transition: color 150ms;">Оферта</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     STICKY CTA
+     ============================================================ -->
+<div class="sticky-cta" id="sticky-cta">
+  <div class="text">
+    <b>Готовы обсудить?</b><br>
+    Ответ в течение 3 часов
+  </div>
+  <a href="#form" class="btn btn-primary">Запросить</a>
+  <button class="sticky-cta-close" onclick="hideStickyCTA()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+
+<script>
+/* ============================================================
+   TICKER (live shipments)
+   ============================================================ */
+const TICKER_ITEMS = [
+  { tag: 'shipped', industry: 'MEDICAL',   text: 'Стоматологические установки 4 шт → Краснодар',     time: '3 дня назад' },
+  { tag: 'in-prod', industry: 'CNC',       text: 'Лазерный станок 3 кВт → Челябинск',                time: 'в производстве' },
+  { tag: 'shipped', industry: 'HORECA',    text: 'Кофемашины 12 шт + помольные системы → Москва',    time: '1 неделя назад' },
+  { tag: 'border',  industry: 'WAREHOUSE', text: 'Стеллажная система 600 м³ → Екатеринбург',         time: 'на границе' },
+  { tag: 'shipped', industry: 'CUSTOM',    text: 'Серверы 2 стойки + СХД → ЦОД, Санкт-Петербург',    time: '2 дня назад' },
+  { tag: 'in-prod', industry: 'AGRO',      text: 'Мини-тракторы 60 л.с. 8 шт → Ставропольский край', time: 'отгрузка 12.05' },
+  { tag: 'shipped', industry: 'CUSTOM',    text: 'Аттракцион «Башня» → парк, Сочи',                  time: '5 дней назад' },
+  { tag: 'shipped', industry: 'CNC',       text: 'Сварочный полуавтомат 4 шт → Татарстан',           time: 'вчера' },
+  { tag: 'border',  industry: 'MEDICAL',   text: 'УЗИ-аппарат экспертного класса → Уфа',             time: 'растаможка' },
+  { tag: 'shipped', industry: 'CUSTOM',    text: 'Упаковочная линия → пищевое производство, Казань', time: '3 дня назад' }
+];
+
+const tagToClass = {
+  'shipped': 'success',
+  'in-prod': '',
+  'border':  ''
+};
+const tagLabel = {
+  'shipped': 'ОТГРУЖЕНО',
+  'in-prod': 'В РАБОТЕ',
+  'border':  'НА ГРАНИЦЕ'
+};
+
+function tickerItemHTML(item) {
+  return `
+    <div class="ticker-item">
+      <span class="pill ${tagToClass[item.tag]}">${tagLabel[item.tag]}</span>
+      <span class="pill">${item.industry}</span>
+      <b>${item.text}</b>
+      <span class="dot">·</span>
+      <span>${item.time}</span>
+    </div>
+  `;
+}
+
+const tickerEl = document.getElementById('ticker');
+// Render twice for seamless loop
+const tickerHTML = TICKER_ITEMS.map(tickerItemHTML).join('') + TICKER_ITEMS.map(tickerItemHTML).join('');
+tickerEl.innerHTML = tickerHTML;
+
+/* ============================================================
+   SCROLL REVEAL — "Что входит в цену"
+   ============================================================ */
+const revealItems = document.querySelectorAll('[data-reveal]');
+if ('IntersectionObserver' in window) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const items = Array.from(el.parentElement.children);
+        const idx = items.indexOf(el);
+        setTimeout(() => el.classList.add('is-revealed'), idx * 80);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealItems.forEach(el => obs.observe(el));
+} else {
+  revealItems.forEach(el => el.classList.add('is-revealed'));
+}
+
+/* ============================================================
+   STICKY CTA — show after first scroll past hero
+   ============================================================ */
+const stickyCTA = document.getElementById('sticky-cta');
+let stickyDismissed = false;
+window.addEventListener('scroll', () => {
+  if (stickyDismissed) return;
+  const y = window.scrollY;
+  const formY = document.getElementById('form').offsetTop;
+  // Show after scrolling past first 80vh, hide when near form
+  if (y > window.innerHeight * 0.8 && y < formY - window.innerHeight) {
+    stickyCTA.classList.add('is-shown');
+  } else {
+    stickyCTA.classList.remove('is-shown');
+  }
+}, { passive: true });
+
+function hideStickyCTA() {
+  stickyDismissed = true;
+  stickyCTA.classList.remove('is-shown');
+}
+
+/* ============================================================
+   FORM — отправка в Telegram-бот
+   ============================================================ */
+const form = document.getElementById('lead-form');
+const formSuccess = document.getElementById('form-success');
+const tgBtn = document.getElementById('tg-btn');
+
+// ════════════════════════════════════════════════════════════
+// TELEGRAM-БОТ — НАСТРОЙКА (5–10 МИНУТ)
+// ════════════════════════════════════════════════════════════
+//
+// 1. В Telegram пишете @BotFather → /newbot → следуете инструкциям.
+//    Получаете токен вида: 7891234567:AAH8x9zKj...QxYz_AbCdEfGhIjKlMnOp
+//
+// 2. Открываете чат со своим новым ботом по ссылке t.me/<имя_бота>
+//    и пишете ему любое сообщение (например, "старт").
+//
+// 3. В браузере открываете:
+//    https://api.telegram.org/bot<ВАШ_ТОКЕН>/getUpdates
+//    Находите в JSON блок "chat":{"id": ...} — это ваш chat_id.
+//
+// 4. Подставляете ОБЕ строки ниже:
+//    TG_BOT_TOKEN — токен от BotFather (целиком, со всеми символами)
+//    TG_CHAT_ID   — число (для групп — с минусом, например -1001234567890)
+//
+// После этого форма начнёт слать заявки прямо вам в Telegram.
+//
+// Защита: токен виден в исходнике страницы. Это нормально для
+// лендингов небольшого объёма. Если получите спам — пересоздайте
+// бота в @BotFather (команда /token), вставьте новый токен сюда.
+//
+// ════════════════════════════════════════════════════════════
+
+const TG_USERNAME  = 'DirectIndustrial';                     // для кнопки «Написать в Telegram», уже настроено
+const TG_BOT_TOKEN = '8736819770:AAGi07o9RdL_2Ep44iE208fomkiNFYW4lhw';            // ← ВСТАВЬТЕ ТОКЕН СЮДА
+const TG_CHAT_ID   = '7686468716';              // ← ВСТАВЬТЕ CHAT_ID СЮДА
+
+
+function buildTelegramMessage(data) {
+  const lines = [
+    'Здравствуйте! Запрос с сайта Direct Industrial.',
+    '',
+    'Индустрия: ' + (data.industry || '—'),
+    'Что нужно: ' + (data.task || '—')
+  ];
+  if (data.budget)   lines.push('Объём/бюджет: ' + data.budget);
+  if (data.deadline) lines.push('Сроки: ' + data.deadline);
+  if (data.company)  lines.push('Компания: ' + data.company);
+  lines.push('');
+  lines.push('Имя: ' + (data.name || '—'));
+  lines.push('Контакт для связи: ' + (data.contact || '—'));
+  return lines.join('\n');
+}
+
+function buildBotMessage(data) {
+  // Markdown-форматированное сообщение в бот (более структурированное)
+  const lines = [
+    '🔔 *Новая заявка с сайта Direct Industrial*',
+    '',
+    '*Индустрия:* ' + escapeMd(data.industry || '—'),
+    '*Что нужно:* ' + escapeMd(data.task || '—')
+  ];
+  if (data.budget)   lines.push('*Бюджет/объём:* ' + escapeMd(data.budget));
+  if (data.deadline) lines.push('*Сроки:* ' + escapeMd(data.deadline));
+  if (data.company)  lines.push('*Компания:* ' + escapeMd(data.company));
+  lines.push('');
+  lines.push('👤 *Имя:* ' + escapeMd(data.name || '—'));
+  lines.push('📞 *Контакт:* ' + escapeMd(data.contact || '—'));
+  return lines.join('\n');
+}
+
+function escapeMd(s) {
+  // Экранируем символы, ломающие Markdown в Telegram
+  return String(s).replace(/[_*`\[]/g, '\\$&');
+}
+
+function getFormData() {
+  const fd = new FormData(form);
+  return {
+    industry: fd.get('industry'),
+    task:     fd.get('task'),
+    budget:   fd.get('budget'),
+    deadline: fd.get('deadline'),
+    name:     fd.get('name'),
+    contact:  fd.get('contact'),
+    company:  fd.get('company'),
+    website:  fd.get('website')   // honeypot — должен быть пустым
+  };
+}
+
+// ──────────────────────────────────────────────────
+// Кнопка «Написать в Telegram» — работает всегда,
+// без бота, открывает чат с менеджером.
+// ──────────────────────────────────────────────────
+tgBtn.addEventListener('click', () => {
+  const data = getFormData();
+  const message = buildTelegramMessage(data);
+  const url = 'https://t.me/' + TG_USERNAME + '?text=' + encodeURIComponent(message);
+  window.open(url, '_blank');
+});
+
+// ──────────────────────────────────────────────────
+// Отправка формы → Telegram-бот
+// ──────────────────────────────────────────────────
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = getFormData();
+
+  // Спам-защита: если honeypot заполнен — это бот, делаем вид, что всё ок
+  if (data.website) {
+    console.warn('Honeypot triggered, ignoring submission.');
+    form.style.display = 'none';
+    formSuccess.classList.add('is-shown');
+    return;
+  }
+
+  // Валидация обязательных полей
+  if (!data.industry || !data.task || !data.name || !data.contact) {
+    alert('Пожалуйста, заполните обязательные поля: индустрия, описание задачи, имя, контакт.');
+    return;
+  }
+
+  const submitBtn = form.querySelector('button[type=submit]');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Отправляем…';
+
+  // Если токен не настроен — даём инструкцию владельцу сайта
+  if (TG_BOT_TOKEN === 'PASTE_YOUR_BOT_TOKEN_HERE' || TG_CHAT_ID === 'PASTE_YOUR_CHAT_ID_HERE') {
+    console.warn(
+      '%cTelegram-бот не настроен.',
+      'color: #F59E0B; font-weight: bold;',
+      '\nЗамените TG_BOT_TOKEN и TG_CHAT_ID в исходнике страницы.\nПодробная инструкция в комментарии над константами.'
+    );
+    alert('Форма ещё не подключена к Telegram-боту. Воспользуйтесь кнопкой «Написать в Telegram» — она работает.');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Отправить заявку';
+    return;
+  }
+
+  try {
+    const text = buildBotMessage(data);
+
+    const res = await fetch('https://api.telegram.org/bot' + TG_BOT_TOKEN + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        text: text,
+        parse_mode: 'Markdown',
+        disable_web_page_preview: true
+      })
+    });
+    const result = await res.json();
+    if (!res.ok || !result.ok) {
+      console.error('Telegram API error:', result);
+      throw new Error(result.description || 'TG send failed');
+    }
+
+    form.style.display = 'none';
+    formSuccess.classList.add('is-shown');
+    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  } catch (err) {
+    console.error(err);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Отправить заявку';
+    alert('Не удалось отправить форму. Попробуйте кнопку «Написать в Telegram».');
+  }
+});
+</script>
+
+</body>
+</html>
